@@ -1,101 +1,145 @@
 import java.io.Serializable;
 
+/**
+ * This is a super class called Vehicle. It holds all the basic properties of any
+ * vehicle type like the make, model, model year, retail price etc.
+ */
 public class Vehicle implements Serializable {
-
+    private static final long serialVersionUID = 1864726920921172988L;
     private String make;
     private String model;
-    private int year;
-    private double price;
-    private double mpg;
-    private boolean has4Wd;
+    private String makeModel;
+    private int modelYear;
+    private int retailPrice;
+    private int milesPerGallon;
+    private boolean isFourWheelDrive;
 
-    public Vehicle() {
-
-    }
-
-    public Vehicle(String make, String model, int year, double price, double mpg, boolean has4Wd) {
+    // constructor
+    public Vehicle(String make, String model, int modelYear, int price, int mpg, boolean isFourWheelDrive) {
         this.make = make;
-        this.model = model;
-        this.year = year;
-        this.price = price;
-        this.mpg = mpg;
-        this.has4Wd = has4Wd;
-
+        this. model = model;
+        this.modelYear = modelYear;
+        this.retailPrice = price;
+        this.milesPerGallon = mpg;
+        this.isFourWheelDrive = isFourWheelDrive;
     }
 
-    //GETTERS
+    // second constructor
+    public Vehicle(String makeModel,int modelYear,int retailPrice,boolean isFourWheelDrive) {
+        this.makeModel = makeModel;
+        this. modelYear = modelYear;
+        this.retailPrice = retailPrice;
+        this.isFourWheelDrive = isFourWheelDrive;
+    }
 
-    //returns make
-    public String getMake() {
+    // getter for make
+    public String getMake(){
         return make;
     }
 
-    //returns model
+    // getter for model
     public String getModel() {
         return model;
     }
 
-    //returns year
-    public int getYear() {
-        return year;
+    // getter for makeModel
+    public String getMakeModel() {
+        return makeModel;
     }
 
-    //returns price
-    public double getPrice() {
-        return price;
+    // getter for model year
+    public int getModelYear() {
+        return modelYear;
     }
 
-    //returns mpgs
-    public double getMpg() {
-        return mpg;
+    // getter for price
+    public int getRetailPrice() {
+        return retailPrice;
     }
 
-    //returns boolean for 4WD or not
-    public boolean get4Wd() {
-        return has4Wd;
+    // getter for miles per gallon
+    public int getMilesPerGallon() {
+        return milesPerGallon;
     }
 
-    //SETTERS
-    //sets make
+    // getter for if the vehicle has four wheel drive
+    public boolean isFourWheelDrive() {
+        return isFourWheelDrive;
+    }
+
+    // setter method for make of vehicle
     public void setMake(String make) {
         this.make = make;
     }
 
-    //sets model
-    public void setModel(String model) {
+    // setter method for model of vehicle
+    public void setModel(String model){
         this.model = model;
     }
 
-    //set year
-    public void setYear(int year) {
-        this.year = year;
+    // setter method for makeModel of vehicle
+    public void setMakeModel(String makeModel) {
+        this.makeModel = makeModel;
     }
 
-    //set price
-    public void setPrice(double price) {
-        this.price = price;
+    // setter method for model year of vehicle
+    public void setModelYear(int modelYear) {
+        this.modelYear = modelYear;
     }
 
-    //set mpg
-    public void setMpg(double mpg) {
-        this.mpg = mpg;
+    // setter method for price of vehicle
+    public void setRetailPrice(int price) {
+        this.retailPrice = price;
     }
 
-    //set boolean 4wd
-    public void set4Wd(boolean has4Wd) {
-        this.has4Wd = has4Wd;
+    // setter method for miles per gallon of vehicle
+    public void setMilesPerGallon(int mpg) {
+        this.milesPerGallon = mpg;
     }
 
-    //print info
-    public void printInfo() {
-        System.out.println("------------------------");
-        System.out.printf("| %d %8s %6s |%n", year, make, model);
-        if(!has4Wd) {
-            System.out.printf("| %-20s |%n", "4WD");
+    // setter for if vehicle has four wheel drive
+    public void setFourWheelDrive(boolean isFourWheelDrive) {
+        this.isFourWheelDrive = isFourWheelDrive;
+    }
+
+    /**
+     * This method prints out the correct string data to console as well as returns the string
+     */
+    public String printVehicle(){
+        String vehicleStr = modelYear + " " + make + " " + model + "\n" +
+                "$" + retailPrice + ",000" + "\n" + milesPerGallon + "MPG";
+
+        if(isFourWheelDrive) {
+            vehicleStr = modelYear + " " + make + " " + model + "\n" + "4WD" + "\n" +
+                    "$" + retailPrice + ",000" + "\n" + milesPerGallon + "MPG";
         }
-        System.out.printf("| $%2.0f\tMPG: %-6.1f|%n",price, mpg);
-        System.out.println("------------------------");
+
+        System.out.println(vehicleStr);
+
+        return vehicleStr;
     }
 
+    /**
+     * This method prints out the correct string data to console when
+     * using the second constructor as well as returns the string
+     */
+    public String printVehicle2(){
+        String vehicleStr = modelYear + " " + makeModel + "\n" +
+                "$" + retailPrice;
+
+        if(isFourWheelDrive) {
+            vehicleStr = modelYear + " " + makeModel + "\n" + "4WD" + "\n" +
+                    "$" + retailPrice;
+        }
+
+        System.out.println(vehicleStr);
+
+        return vehicleStr;
+    }
+
+    // This is a toString method to print to the user the year, make, and model of the vehicle
+    public String toString() {
+        return modelYear + " " + make + " " + model;
+    }
 
 }

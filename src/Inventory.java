@@ -1,102 +1,105 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This is a class called Inventory that maintains an array list of
+ * vehicle type that are available for sale
+ */
 public class Inventory implements Serializable {
+    private static final long serialVersionUID = 8120157080073719468L;
+    // create a list for the vehicles to be stored
+    private List<Vehicle> listOfVehicles;
 
-    private java.util.ArrayList<Vehicle> list = new ArrayList<Vehicle>();
-
-    //Empty constructor
+    // constructor
     public Inventory() {
-
+        listOfVehicles = new ArrayList<Vehicle>();
     }
 
-    //Constructor for single vehicle variable
-    public Inventory(Vehicle vehicle) {
-        list.add(vehicle);
+    // This is a method to add a vehicle to the array list
+    public void add(Vehicle newVehicle) {
+        listOfVehicles.add(newVehicle);
     }
 
-    //Constructor that takes in an array list of vehicles
-    public Inventory(java.util.ArrayList<Vehicle> list) {
-        for(Vehicle v : list) {
-            this.list.add(v);
+    /**
+     * This is a method to remove a vehicle from the array list
+     */
+    public void remove(Vehicle vehicleToRemove) {
+        for (int i = 0; i < listOfVehicles.size(); i++) {
+            Vehicle currentVehicle = listOfVehicles.get(i);
+
+            if (currentVehicle.getMake().equalsIgnoreCase(vehicleToRemove.getMake()) &&
+                    currentVehicle.getModel().equalsIgnoreCase(vehicleToRemove.getModel()) &&
+                    currentVehicle.getModelYear() == vehicleToRemove.getModelYear() &&
+                    currentVehicle.getRetailPrice() == vehicleToRemove.getRetailPrice() &&
+                    currentVehicle.getMilesPerGallon() == vehicleToRemove.getMilesPerGallon() &&
+                    currentVehicle.isFourWheelDrive() == vehicleToRemove.isFourWheelDrive()){
+
+                listOfVehicles.remove(currentVehicle);
+
+            }
         }
     }
 
-    //adds a vehicle to the list
-    public void add(Vehicle v) {
-        this.list.add(v);
-    }
-
-    //Removes the vehicle if found in the array
-    public void remove(Vehicle v) {
-        if(list.contains(v)) {
-            list.remove(v);
-        } else {
-            System.out.println("Vehicle not found in inventory. Remove failed!");
-        }
-    }
-
-    //returns true or false if the given vehicle is in inventory
-    public boolean contains(Vehicle v) {
-        if(list.contains(v)) {
-            return true;
-        }
-        return false;
-    }
-
-    //for testing purposes, clears list entirely
-    public void clearList() {
-        list.clear();
-    }
-
-    //returns size of list
-    public int size() {
-        return list.size();
-    }
-
-    //returns cheapest vehicle
+    /**
+     * This is a method to find the cheapest vehicle in the array list
+     */
     public Vehicle findCheapestVehicle() {
-        double min = Double.MAX_VALUE;
-        Vehicle cheapest = null;
-        for (Vehicle v :list) {
-            if(v.getPrice() < min) {
-                cheapest = v;
-                min = v.getPrice();
+        if (listOfVehicles.isEmpty()) {
+            return null;
+        }
+
+        Vehicle cheapestVehicle = listOfVehicles.get(0);
+        for (Vehicle currentVehicle : listOfVehicles) {
+            if (currentVehicle.getRetailPrice() < cheapestVehicle.getRetailPrice()) {
+                cheapestVehicle = currentVehicle;
             }
         }
-        return cheapest;
+        return cheapestVehicle;
     }
 
-    //returns most expensive vehicle
+    /**
+     * This is a method to find the most expensive vehicle in the array list
+     */
     public Vehicle findMostExpensiveVehicle() {
-        double max = Double.MIN_VALUE;
-        Vehicle mostExpensive = null;
-        for (Vehicle v :list) {
-            if(v.getPrice() > max) {
-                mostExpensive = v;
-                max = v.getPrice();
+        if (!listOfVehicles.isEmpty()) {
+            Vehicle mostExpensiveVehicle = listOfVehicles.get(0);
+            for (Vehicle currentVehicle : listOfVehicles) {
+                if (currentVehicle.getRetailPrice() > mostExpensiveVehicle.getRetailPrice()) {
+                    mostExpensiveVehicle = currentVehicle;
+                }
             }
-        }
-        return mostExpensive;
-    }
-
-    //Prints the average price of all vehicles
-    public void printAveragePriceOfAllVehicles() {
-        double avg = 0;
-        double sum = 0;
-
-        for(Vehicle v: list) {
-            sum += v.getPrice();
-        }
-
-        avg = sum / list.size();
-
-        System.out.printf("Average Price of Inventory: %2.2f%n", avg);
-    }
-
-    public void printAll() {
-        for (Vehicle v : list) {
-            v.printInfo();
+            return mostExpensiveVehicle;
+        } else {
+            return null;
         }
     }
+
+    /**
+     * This is a method that prints out the average price of all the vehicles
+     */
+    public String printAveragePriceOfAllVehicles() {
+        int sumOfVehiclePrices = 0;
+        int averageOfVehiclePrices;
+        String averagePriceString;
+
+        if (listOfVehicles.size() > 0) {
+            for (Vehicle vehiclesInList : listOfVehicles) {
+                sumOfVehiclePrices += vehiclesInList.getRetailPrice();
+            }
+            averageOfVehiclePrices = sumOfVehiclePrices / listOfVehicles.size();
+            averagePriceString = "Average price of all vehicles: $" + averageOfVehiclePrices + ",000";
+        } else {
+            averagePriceString = "Size of inventory is 0, no average can be calculated";
+        }
+
+        System.out.println(averagePriceString);
+        return averagePriceString;
+    }
+
+    // Getter method to return the array list of vehicles
+    public List<Vehicle> getListOfVehicles() {
+        return listOfVehicles;
+    }
+
 }
