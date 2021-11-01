@@ -3,6 +3,7 @@ import org.apache.commons.lang3.*;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.io.FileWriter;
 
 /**
  * BRIAN MOLINA, WORKED WITH BRANDON SAID
@@ -72,6 +73,30 @@ public class Dealer implements Serializable{
             System.out.println();
         }
         return deserializedInventory;
+    }
+
+    /**
+     * This is a method to create a report
+     */
+    public void generateReport(Inventory inv) {
+        try{
+            File firstFile = new File("report.txt");
+            if (!firstFile.exists()) {
+                firstFile.createNewFile();
+            }
+
+            FileWriter fileWriter = new FileWriter("report.txt",true);
+            for(Vehicle currentVehicle : inv.getListOfVehicles()) {
+                String vehicleInfo = currentVehicle.getMakeModel() + "," + currentVehicle.getModelYear() + "," + currentVehicle.getMilesPerGallon() + ",";
+                if (currentVehicle.isFourWheelDrive()) {
+                    vehicleInfo += "TRUE";
+                }
+                fileWriter.write(vehicleInfo);
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
