@@ -1,9 +1,12 @@
 import org.apache.commons.io.*;
 import org.apache.commons.lang3.*;
-import java.io.*;
-import java.net.URL;
-import java.util.*;
+
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.URL;
+import java.util.Scanner;
 
 /**
  * BRIAN MOLINA, WORKED WITH BRANDON SAID
@@ -87,10 +90,11 @@ public class Dealer implements Serializable{
 
             FileWriter fileWriter = new FileWriter("report.txt",true);
             for(Vehicle currentVehicle : inv.getListOfVehicles()) {
-                String vehicleInfo = currentVehicle.getMakeModel() + "," + currentVehicle.getModelYear() + "," + currentVehicle.getMilesPerGallon() + ",";
+                String vehicleInfo = currentVehicle.getMakeModel() + "," + currentVehicle.getModelYear() + "," + currentVehicle.getRetailPrice() + ",";
                 if (currentVehicle.isFourWheelDrive()) {
                     vehicleInfo += "TRUE";
                 }
+                vehicleInfo += "\n";
                 fileWriter.write(vehicleInfo);
             }
             fileWriter.close();

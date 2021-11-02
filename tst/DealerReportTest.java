@@ -1,10 +1,18 @@
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 public class DealerReportTest {
 
+    /**
+     * Tests that the report.txt file is created. Deletes file after to
+     * prevent from messing with other tests.
+     */
     @Test
     public void fileExistsTest() {
         // Arrange
@@ -25,6 +33,48 @@ public class DealerReportTest {
         // Act
         firstDealer.generateReport(firstInventory);
         // Assert
-        Assert.assertTrue(firstFile.exists());
+        Assert.assertTrue("File does not exist.", firstFile.exists());
     }
+    @After
+    public void destroyFileAfter() {
+        File reportFile = new File("report.txt");
+        reportFile.delete();
+    }
+
+
+
+    /**
+     * Test checks that text is added to a file correctly when
+     * using generateReport when report.txt already exists
+     */
+    @Before
+    public void destroyFileBefore() {
+        File reportFile = new File("report.txt");
+        reportFile.delete();
+    }
+    @Test
+    public void appendingWorksTest() throws IOException {
+        //Arrange
+        Inventory inventory = new Inventory();
+        inventory.add(new Vehicle("Ford F150",2015,35000,true));
+
+        Dealer dealer = new Dealer();
+        File report = new File("report.txt");
+        File expectedReport = new File("appendingWorks.txt");
+
+        //Act
+        dealer.generateReport(inventory);
+        dealer.generateReport(inventory); // purposefully done twice
+
+
+        //Assert
+        Assert.assertTrue("Files do not match.", FileUtils.contentEquals(report, expectedReport));
+    }
+
+
+    /**
+     * Test checks that appending works when file exists, but is blank to start.
+     */
+
+
 }

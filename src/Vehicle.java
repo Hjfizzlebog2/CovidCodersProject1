@@ -27,7 +27,7 @@ public class Vehicle implements Serializable {
     // second constructor
     public Vehicle(String makeModel,int modelYear,int retailPrice,boolean isFourWheelDrive) {
         this.makeModel = makeModel;
-        this. modelYear = modelYear;
+        this.modelYear = modelYear;
         this.retailPrice = retailPrice;
         this.isFourWheelDrive = isFourWheelDrive;
     }
