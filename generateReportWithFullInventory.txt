@@ -1,0 +1,5 @@
+Ford F150,2015,35000,TRUE
+Ford Focus,2010,15000,
+Ford Fiesta,2012,18000,
+GM Sierra,2016,40000,TRUE
+Chevy Silverado,2016,35000,TRUE
