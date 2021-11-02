@@ -10,6 +10,30 @@ import java.io.IOException;
 public class DealerReportTest {
 
     /**
+     * Ensures that a report.txt file does not exist prior to
+     * every test. This is because the logic within each test
+     * is dependent upon the fact that report.txt does not exist
+     * nor does it already have data in it. Otherwise, tests would
+     * not validate correctly if report.txt changed every time
+     * a test ran.
+     */
+    @Before
+    public void destroyFileBefore() {
+        File reportFile = new File("report.txt");
+        reportFile.delete();
+        //NOTE: Might require if/else based on if report.txt exists
+    }
+
+    /*
+    @After
+    public void destroyFileAfter() {
+        File reportFile = new File("report.txt");
+        reportFile.delete();
+    }
+     */
+
+
+    /**
      * Tests that the report.txt file is created. Deletes file after to
      * prevent from messing with other tests.
      */
@@ -35,11 +59,6 @@ public class DealerReportTest {
         // Assert
         Assert.assertTrue("File does not exist.", firstFile.exists());
     }
-    @After
-    public void destroyFileAfter() {
-        File reportFile = new File("report.txt");
-        reportFile.delete();
-    }
 
 
 
@@ -47,11 +66,6 @@ public class DealerReportTest {
      * Test checks that text is added to a file correctly when
      * using generateReport when report.txt already exists
      */
-    @Before
-    public void destroyFileBefore() {
-        File reportFile = new File("report.txt");
-        reportFile.delete();
-    }
     @Test
     public void appendingWorksTest() throws IOException {
         //Arrange
