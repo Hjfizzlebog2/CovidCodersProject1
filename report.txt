@@ -1,1 +1,0 @@
-Ford F150,2015,0,TRUEFord Focus,2010,0,Ford Fiesta,2012,0,GM Sierra,2016,0,TRUEChevy Silverado,2016,0,TRUE
